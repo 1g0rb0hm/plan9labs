@@ -620,14 +620,10 @@ mousethread(void *v)
 				goto Continue;
 			}
 			/* scroll buttons, wheels, etc. */
-			if(w != nil && (m.buttons & (8|16))){
-				if(m.buttons & 8)
-					but = Kscrolloneup;
-				else
-					but = Kscrollonedown;
+			if(w != nil && m.scroll != 0){
 				winlock(w, 'M');
 				t->eq0 = ~0;
-				texttype(t, but);
+				textmomentumscroll(t, m.scroll);
 				winunlock(w);
 				goto Continue;
 			}

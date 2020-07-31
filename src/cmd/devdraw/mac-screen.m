@@ -602,9 +602,9 @@ rpc_resizewindow(Client *c, Rectangle r)
 
 	s = [e scrollingDeltaY];
 	if(s > 0)
-		[self sendmouse:8];
+		[self sendmouse:8 by:s];
 	else if (s < 0)
-		[self sendmouse:16];
+		[self sendmouse:16 by:s];
 }
 
 - (void)keyDown:(NSEvent*)e
@@ -694,15 +694,29 @@ rpc_resizewindow(Client *c, Rectangle r)
 		m = [e modifierFlags];
 		if(m & NSEventModifierFlagOption){
 			gfx_abortcompose(self.client);
-			b = 2;
-		}else
-		if(m & NSEventModifierFlagCommand)
+			if(m & NSEventModifierFlagControl){
+				[self sendmouse:2];
+				b = 1;
+			}else
+				b = 2;
+		}else if(m & NSEventModifierFlagCommand)
 			b = 4;
+		else if(m & NSEventModifierFlagControl)
+			b = 8;
+	}else if(b == 4){
+		m = [e modifierFlags];
+		if(m & NSEventModifierFlagCommand)
+			b = 8;
 	}
 	[self sendmouse:b];
 }
 
 - (void)sendmouse:(NSUInteger)b
+{
+	[self sendmouse:b by:0];
+}
+
+- (void)sendmouse:(NSUInteger)b by:(NSUInteger)s
 {
 	NSPoint p;
 
@@ -710,7 +724,7 @@ rpc_resizewindow(Client *c, Rectangle r)
 		[self.window mouseLocationOutsideOfEventStream]];
 	p.y = Dy(self.client->mouserect) - p.y;
 	// LOG(@"(%g, %g) <- sendmouse(%d)", p.x, p.y, (uint)b);
-	gfx_mousetrack(self.client, p.x, p.y, b, msec());
+	gfx_mousetrack(self.client, p.x, p.y, b, s, msec());
 	if(b && _lastInputRect.size.width && _lastInputRect.size.height)
 		[self resetLastInputRect];
 }
