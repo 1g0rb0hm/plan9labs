@@ -234,6 +234,7 @@ int		textselect3(Text*, uint*, uint*);
 void		textsetorigin(Text*, uint, int);
 void		textsetselect(Text*, uint, uint);
 void		textshow(Text*, uint, uint, int);
+void		textmomentumscroll(Text*, int);
 void		texttype(Text*, Rune);
 
 struct Window
