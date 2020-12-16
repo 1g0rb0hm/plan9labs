@@ -2,9 +2,11 @@
 
 if(~ $#PLAN9 0)
 	PLAN9=/usr/local/plan9
+if(~ $#HOME 0)
+	HOME=/Users/^`{whoami}
 if(! ~ $path(1) $PLAN9/bin)
 	path=($PLAN9/bin $path)
-if(test -r $HOME/lib/profile)
-	. $HOME/lib/profile
+if(! ~ $path($#path) $HOME/bin)
+ 	. $HOME/lib/profile
 
 ~ $#* 0 || exec $*
