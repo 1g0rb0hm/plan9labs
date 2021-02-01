@@ -10,15 +10,13 @@ matrix:
       addons:
         coverity_scan:
           project:
-            name: "projects/1g0rb0hm-plan9labs"
+            name: "1g0rb0hm/plan9labs"
             description: "Build submitted via Travis CI"
-          notification_email: boem.igor@gmail.com
+          notification_email: boehm.igor@gmail.com
           build_command: "./INSTALL"
           branch_pattern: devel
 
 before_script:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install Caskroom/cask/osxfuse; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-; fi
 
 script:
