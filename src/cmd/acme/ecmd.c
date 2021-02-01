@@ -206,6 +206,8 @@ B_cmd(Text *t, Cmd *cp)
 		if(nr > 0)
 			r = skipbl(s+1, nr-1, &nr);
 	}
+	if(list != collection)
+		free(list);
 	clearcollection();
 	return TRUE;
 }
@@ -281,6 +283,8 @@ D_cmd(Text *t, Cmd *cp)
 		if(nr > 0)
 			r = skipbl(s+1, nr-1, &nr);
 	}while(nr > 0);
+	if(list != collection)
+		free(list);
 	clearcollection();
 	free(dir.r);
 	return TRUE;
@@ -1002,14 +1006,14 @@ filelooper(Text *t, Cmd *cp, int XY)
 	 */
 	allwindows(alllocker, (void*)1);
 	globalincref = 1;
-	
+
 	/*
 	 * Unlock the window running the X command.
 	 * We'll need to lock and unlock each target window in turn.
 	 */
 	if(t && t->w)
 		winunlock(t->w);
-	
+
 	for(i=0; i<loopstruct.nw; i++) {
 		targ = &loopstruct.w[i]->body;
 		if(targ && targ->w)
