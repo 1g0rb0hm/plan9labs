@@ -1,3 +1,9 @@
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: giJHmrQ8yeIkkIEzxBA4j+wYf0LpCPusMPbxatY8TOEQ88tnsKk5ksUIZFngVEa5FdLgBtXfg2/bwdcdvxgLsmlthnHRMgOdDgRHOQLUXf9ENRrZqMngLh5SM5/qHUmhDhT0oYMiEErx2s2IgRPpHXRofIUhWLNBRl8BrvKJ2FwiJ5nlO4drMWK2zrL5w5VUAQ8OJcnPb9eMt39WuYpvPPQILphpTHATfBeCKP6LGvJOVbImSFWcRZrNtSnYOo5pb+JUwYdj1m2+NOsyK+RAbqeGyqJ4m3/z6yR5bxtERyIlwb0N6v7BY+pifZYgop1K1UMEnWyV5aW68r5lp94RA5yvxY+DVX/WLFNxleUzhsgjGxOOiElyq/nqe5Ygoc5q5oLx8JDRoZfle19sBr7lvfU3z/4TKC9Jk/ZD73OP4wo7XEfk6yy1G7FeXkEyWxAEIFNWEbB7f121K9PjvjeB7j7oNmHaGV9smbd1FU+9tWuAy70g9Wv1fKMsHLbXgOSkYKfyLP4e8rSDgC+xPXENPsnWMU1etezx1REd47/1AQczsAxu27A9hLjV/t66F7npLZzz2Aa02AVUEcACAvfqX4ITfUOZlDdNFPPyNR/9DlrA39/WVKVUXErGy86csqfIKWk8IXCjaq8l4VdttAwacgcrzWmMAPgzwZK5pUc7i30=
+
 language: c
 
 matrix:
@@ -5,8 +11,6 @@ matrix:
     - os: osx
       osx_image: xcode10.2
     - os: linux
-      env:
-        - secure: "KMCfMHGUsu9U+yRmP5XhCI8VsUpKAeYsrvZoxPTj4nu8S5LPt4jsEblTKZbXEweKu/ouamdxlgJUvFdhjtZg26uC7H1H6tyBn4DhdHN22nD708rstdiyUj0FnLPt9YWGRsp1Vx/gTQzKp9q/FDA7j9vscMSgzicm/fZ2WAa+3i3zqG9AnpcPRwaYmZ6jbiQSPg3xvD8gw+UuTcuAxZ0jnkbQqVCcREdmpkrlPQbuCKsrx0ddEEEMjdyfl4PFRWGOB0tiLJgod3NQqMKzv0j1DbXWUJG5AXFRil+kSxIrAglYwOHL6jCjZ4U3VhqLHFnZLnfs8M51Q6v7eDSbC+slcW84eg6jsimjLZaHQ2hxKeuiuH2T65DSSCOQra3UyR+llvpJc/DQQv27W/aFi0gaNmKy9UCHnUj/QjaJwqShx+qT8BZXwsTSsBAOJ4ey7lXV49yIbp3EFJqJZCD4GVf9d3qrDPeHgz/x8WYUUv1VylvFZxze4sn/ZxIYED2Sz38HzH6CQL/yNOP1v7ML6v6Zfd25fermAoC7BtNt+KoHuQWKcBoh7s625C/nUB63uZTYMH1jd28WAzqjtfdujTa8ApqloQ9g7ikfgPKUsDbnNQ+hgP2fu0iUIlDD7wdmYSmrfUPTkqOoOZK5hHFP1CKG9S1pBf6JbHj7w8C1jJS5+Ys="
       addons:
         coverity_scan:
           project:
