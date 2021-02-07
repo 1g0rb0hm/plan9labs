@@ -131,14 +131,11 @@ cmdexec(Text *t, Cmd *cp)
 char*
 edittext(Window *w, int q, Rune *r, int nr)
 {
-	File *f;
-
-	f = w->body.file;
 	switch(editing){
 	case Inactive:
 		return "permission denied";
 	case Inserting:
-		eloginsert(f, q, r, nr);
+		eloginsert(w->body.file, q, r, nr);
 		return nil;
 	case Collecting:
 		collection = runerealloc(collection, ncollection+nr+1);
@@ -158,11 +155,13 @@ filelist(Text *t, Rune *r, int nr)
 	if(nr == 0)
 		return nil;
 	r = skipbl(r, nr, &nr);
-	if(r[0] != '<')
-		return runestrdup(r);
-	/* use < command to collect text */
 	clearcollection();
-	runpipe(t, '<', r+1, nr-1, Collecting);
+	if(r[0] != '<'){
+		if((collection = runestrdup(r)) != nil)
+			ncollection += runestrlen(r);
+	}else
+		/* use < command to collect text */
+		runpipe(t, '<', r+1, nr-1, Collecting);
 	return collection;
 }
 
@@ -206,8 +205,6 @@ B_cmd(Text *t, Cmd *cp)
 		if(nr > 0)
 			r = skipbl(s+1, nr-1, &nr);
 	}
-	if(list != collection)
-		free(list);
 	clearcollection();
 	return TRUE;
 }
@@ -283,8 +280,6 @@ D_cmd(Text *t, Cmd *cp)
 		if(nr > 0)
 			r = skipbl(s+1, nr-1, &nr);
 	}while(nr > 0);
-	if(list != collection)
-		free(list);
 	clearcollection();
 	free(dir.r);
 	return TRUE;
